@@ -1,0 +1,55 @@
+var rectWidth = 100
+var rectHeight = 50
+
+function setup() {
+	createCanvas(1000, 1000);
+}
+
+function draw() {
+	noStroke();
+
+	push();
+
+		fill(158, 32, 61); //burgundy
+		translate((width/4) - (rectWidth/2), (height/2) - (rectHeight/2));
+
+		rotate(PI/4);
+
+		rect(0, 0, rectWidth, rectHeight);
+
+	pop();
+
+	push();
+
+		fill(240, 174, 22); //mustard
+		translate(2*((width/4) - (rectWidth/2)), (height/2) - (rectHeight/2));
+	
+		rotate(3*PI/4);
+
+		rect(0, 0, rectWidth, rectHeight);
+
+	pop();
+
+	push();
+
+		fill(185, 250, 235); //green
+		translate(3*((width/4) - (rectWidth/2)), (height/2) - (rectHeight/2));
+		
+		rotate(5*PI/4);
+
+		rect(0, 0, rectWidth, rectHeight);
+
+	pop();
+
+	push();
+
+		fill(25, 84, 102); //teal
+		translate(4*((width/4) - (rectWidth/2)), (height/2) - (rectHeight/2));
+
+		rotate(7*PI/4);
+
+		rect(0, 0, rectWidth, rectHeight);
+
+
+
+}
