@@ -1,0 +1,46 @@
+var rectWidth = 70
+var rectHeight = 50
+var stemWidth = 8
+var canvasDistance
+var buttonRadius = 8
+
+
+function setup() {
+	createCanvas(1000, 1000);
+}
+
+function draw() {
+	background(255);
+	noStroke();
+	fill(232, 225, 190);
+
+	push();
+		translate(250-stemWidth/2, canvasDistance+250);
+		rect(0, 0, stemWidth, 250);
+	pop();
+
+	translate(250, 250);
+
+	for(i = 1; i<=4; i++){
+		push();
+
+		canvasDistance = map(mouseX, 0, width, 0, 500/2);
+
+		rotate(i*PI/2 + (canvasDistance*360/250*0.0174533));
+		translate(canvasDistance, canvasDistance);
+
+		fill(65 + i*5, 140 + i*5, 193 + i*5);
+		rect(0, 0, rectWidth, rectHeight);
+		fill(166 + i*5, 220 + i*5, 224 + i*5);
+		triangle(0, rectHeight, rectWidth, 0, 5*rectWidth/3, rectHeight);
+
+		pop();
+	}
+
+	translate(0,0);
+
+	push();
+		fill(209, 93, 64);
+		translate(canvasDistance, canvasDistance);
+		ellipse(0, 0, buttonRadius*2, buttonRadius*2);
+	pop();
