@@ -1,0 +1,187 @@
+var buttonRadius = 25  //determines size of interactive buttons
+var growthRate = 1  //sets the pace at which stem/leaves grow
+var potWidth = 50 
+var potHeight = 100
+
+var stemRadius = 4
+var stemHeight = 10
+
+var leafATranslation = 600 - potHeight
+var leafBTranslation = 600 - potHeight - 75
+var leafCTranslation = 600 - potHeight - 2*75
+var leafDTranslation = 600 - potHeight - 3*75
+
+var leafARotation
+var leafBRotation
+var leafCRotation
+var leafDRotation
+
+var leafASize = 0  //manages leaf growth as stem grows
+var leafBSize = 0
+var leafCSize = 0
+var leafDSize = 0
+
+var water
+var fert
+var poison
+var superPoison
+
+function preload() {
+	water = loadImage('Water.png');
+	fert = loadImage('Fert.png');
+	poison = loadImage('Poison.png');
+	superPoison = loadImage('Super_Poison.png');
+}
+
+
+function setup() {
+
+	createCanvas(600, 1200);
+
+}
+
+
+function draw() {
+
+	background(255, 255, 255);
+
+	noStroke();
+	fill(178, 63, 41);
+	triangle(width/2, 700, width/2 - potWidth/2, height/2-potHeight, width/2 + potWidth/2, height/2-potHeight);
+	fill(171, 55, 33);
+	rect(width/2 - potWidth/2, height/2 - potHeight, potWidth, potHeight/4);
+
+	fill(255, 0, 0);  //decay button
+	image(poison, 25, 25, poison.width/4, poison.height/4);
+	image(superPoison, 85, 25, superPoison.width/4, superPoison.height/4);
+
+	fill(0, 255, 0);  //growth button
+	image(water, 25, 85, water.width/4, water.height/4);
+	image(fert, 85, 85, fert.width/4, fert.height/4);
+
+
+	r = map(stemHeight, 0, 300, 109, 150);
+	g = map(stemHeight, 0, 300, 9, 234);
+	b = map(stemHeight, 0, 300, 34, 217);
+
+	fill(r, g, b);
+	for(i = 1; i < 3; i++){
+		for(j = 1; j < 4; j++){
+			rect(250 + (i*75), 50 + (j*105), 70, 100);
+		}
+	}
+
+
+
+	fill(8, 160, 48);  //stem & leaves
+
+	triangle(width/2 - stemRadius, height/2 - potHeight,
+	width/2 + stemRadius, height/2 - potHeight,
+	width/2, height/2 - potHeight - stemHeight);
+
+	push();
+		translate(width/2, leafATranslation);
+		rotate(leafARotation);
+		ellipse(0, leafASize/2, leafASize/3, leafASize);
+	pop();
+
+	push();
+		if(stemHeight < 0){
+			translate(width/2, leafBTranslation *2);
+		}
+		else{
+			translate(width/2, leafBTranslation);
+		}
+		rotate(leafBRotation);
+		ellipse(0, leafBSize/2, leafBSize/3, leafBSize);
+	pop();
+
+	push();
+		if(stemHeight < 0){
+			translate(width/2, leafCTranslation *2);
+		}
+		else{
+			translate(width/2, leafCTranslation);
+		}
+		rotate(leafCRotation);
+		ellipse(0, leafCSize/2, leafCSize/3, leafCSize);
+	pop();
+
+	push();
+		if(stemHeight < 0){
+			translate(width/2, leafDTranslation *2);
+		}
+		else{
+			translate(width/2, leafDTranslation);
+		}
+		rotate(leafDRotation);
+		ellipse(0, leafDSize/2, leafDSize/3, leafDSize);
+	pop();
+
+
+}
+
+
+function mouseClicked() {
+	if (dist(mouseX, mouseY, 50, 50) <= buttonRadius){
+		growthRate = -1;
+		println("ALL HAIL CTHULU");
+	}
+
+	if (dist(mouseX, mouseY, 110, 50) <= buttonRadius){
+		growthRate = -3;
+		println("CTHULU TO THE MAX");
+	}
+
+	if (dist(mouseX, mouseY, 50, 110) <= buttonRadius){
+		growthRate = 1;
+		println("I love jesus.");
+	}
+
+	if (dist(mouseX, mouseY, 110, 110) <= buttonRadius){
+		growthRate = 3;
+		println("JESUS BAAH");
+	}
+
+}
+
+
+function mouseDragged() {  //determines plant growth
+
+	stemHeight = (stemHeight+growthRate);
+	println("growing");
+
+	if (stemHeight%75 == 0) {
+		stemRadius = stemRadius + .5*growthRate;
+	}
+
+	if (stemHeight < 75 && stemHeight > -75) {
+		println('growing leaf A');
+		leafATranslation = leafATranslation - growthRate;
+		leafASize = leafASize + growthRate;
+		leafARotation = map(leafASize, 0, 80, PI/2, 3*PI/4);
+	}
+
+	if (abs(stemHeight) < 150 && abs(stemHeight) > 76) {
+		println('growing leaf B');
+		leafBTranslation = leafBTranslation - growthRate;
+		leafBSize = leafBSize + growthRate;
+		leafBRotation = map(leafBSize, 0, 80, -PI/2, -3*PI/4);
+	}
+
+	if (abs(stemHeight) < 225 && abs(stemHeight) > 151) {
+		println('growing leaf C');
+		leafCTranslation = leafCTranslation - growthRate;
+		leafCSize = leafCSize + growthRate;
+		leafCRotation = map(leafCSize, 0, 80, PI/2, 3*PI/4);
+	}
+
+	if (abs(stemHeight) < 275 && abs(stemHeight) > 226) {
+		println('growing leaf D');
+		leafDTranslation = leafDTranslation - growthRate;
+		leafDSize = leafDSize + growthRate;
+		leafDRotation = map(leafDSize, 0, 80, -PI/2, -3*PI/4);
+	}
+
+}
+
