@@ -1,0 +1,40 @@
+var ballXPos = 100;
+var ballYPos = 100;
+var xVelocity = 1;
+var yVelocity = 4;
+var xDir = 1;
+var yDir = 1;
+
+function preload() {
+	bubble = loadSound("assets/bubble.wav");
+}
+
+function setup() {
+
+	createCanvas(300, 400);
+
+}
+
+function draw() {
+
+	background(245);
+
+	if (ballXPos == width  ||  ballXPos == 0) {
+		xDir = xDir * -1;
+		bubble.play();
+	}
+
+	if (ballYPos == height  ||  ballYPos == 0) {
+		yDir = yDir * -1;
+		bubble.play();
+	}
+
+
+	println(xDir, yDir);
+
+	ballXPos = ballXPos + (xVelocity * xDir);
+	ballYPos = ballYPos + (yVelocity * yDir);
+
+	ellipse(ballXPos, ballYPos, 50, 50);
+
+}
