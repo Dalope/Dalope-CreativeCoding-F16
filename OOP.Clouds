@@ -1,0 +1,69 @@
+var myCloud;
+var myStar = [];
+
+function setup() {
+	createCanvas(500, 500);
+	background(245);
+
+	myCloud = new Cloud();
+
+	starNumber = 0;
+	
+	for (i = 1; i <= 6; i++){
+		for (j = 1; j <= 10; j++){
+			myStar[starNumber] = new Star(width/2 - 90 + (100/5 * i),
+				height/2 + (25 * j));
+			starNumber += 1;
+		}
+	}
+
+}
+
+
+function draw() {
+
+	background(154, 179, 206);
+
+	for (i = 0; i < starNumber; i++){
+		myStar[i].starMove();
+		myStar[i].starMake();
+	}
+
+	myCloud.cloudMake();
+
+}
+
+
+function Star(startXPos, startYPos) {
+	this.xPos = startXPos;
+	this.yPos = startYPos;
+	this.velocity = 1;
+
+	this.starMove = function() {
+		if (this.yPos >= height){
+			this.yPos = height/2
+		}
+		this.yPos += this.velocity;
+	}
+
+	this.starMake = function() {
+		noStroke();
+		fill(28, 47, 68);
+		ellipse(this.xPos, this.yPos, 5, 5);
+		triangle(this.xPos - 2.5, this.yPos, this.xPos + 2.5, this.yPos,
+			this.xPos, this.yPos - 5);
+	}
+
+};
+
+function Cloud() {
+	this.cloudMake = function () {
+		noStroke();
+		fill(74, 103, 135);
+
+		ellipse(width/2 - 25, height/2, 100, 100);
+		ellipse(width/2 + 25, height/2 + 10, 80, 80);
+		ellipse(width/2 - 65, height/2 + 18, 65, 65);
+		rect(width/2 - 60, height/2 + 40, 85, 10);
+	}
+};
